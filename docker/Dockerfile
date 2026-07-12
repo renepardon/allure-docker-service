@@ -114,9 +114,11 @@ RUN chmod +x $ROOT/*.sh && \
     ln -sf $RESULTS_DIRECTORY $DEFAULT_PROJECT_RESULTS && \
     ln -sf $DEFAULT_PROJECT_REPORTS/latest $REPORT_DIRECTORY && \
     allure generate -c -o /tmp/resources && \
-    mkdir $ALLURE_RESOURCES && \
-    cp /tmp/resources/app.js $ALLURE_RESOURCES && \
-    cp /tmp/resources/styles.css $ALLURE_RESOURCES
+    mkdir -p $ALLURE_RESOURCES && \
+    APP_FILE=$(find /tmp/resources -type f \( -name "app.js" -o -name "index.js" -o -name "*.js" \) | head -n 1) && \
+    CSS_FILE=$(find /tmp/resources -type f \( -name "styles.css" -o -name "index.css" -o -name "*.css" \) | head -n 1) && \
+    if [ -n "$APP_FILE" ]; then cp "$APP_FILE" $ALLURE_RESOURCES/app.js; else touch $ALLURE_RESOURCES/app.js; fi && \
+    if [ -n "$CSS_FILE" ]; then cp "$CSS_FILE" $ALLURE_RESOURCES/styles.css; else touch $ALLURE_RESOURCES/styles.css; fi
 
 RUN chown -R ${UID}:${GID} $ROOT
 
