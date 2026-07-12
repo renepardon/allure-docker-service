@@ -14,8 +14,8 @@ FROM python:${PYTHON_VERSION}-alpine AS dev_stage
 RUN apk update
 RUN apk add build-base
 RUN pip install -U pylint
-RUN pip install --upgrade pip==25.2 setuptools==80.9.0 wheel==0.45.1 waitress==3.0.2 && \
-    pip install -Iv Flask==3.1.2 Flask-JWT-Extended==4.7.1 flask-swagger-ui==4.11.1 requests==2.32.5
+RUN pip install --upgrade pip==25.2 setuptools==82.0.0 wheel==0.46.2 waitress==3.0.2 && \
+    pip install -Iv Flask==3.1.2 Flask-JWT-Extended==4.7.1 flask-swagger-ui==4.11.1 requests==2.33.0
 
 ENV ROOT_DIR=/code
 RUN mkdir -p $ROOT_DIR
@@ -64,8 +64,8 @@ RUN apt-get update && \
     sed -i "s/\"--force-reinstall\"/\"--force-reinstall\", \"--break-system-packages\"/g" get-pip.py && \
     python${PYTHON_VERSION} get-pip.py && \
     python${PYTHON_VERSION} -m pip config set global.break-system-packages true && \
-    python${PYTHON_VERSION} -m pip install setuptools==80.9.0 wheel==0.45.1 waitress==3.0.2 pipdeptree==2.29.0 cffi==2.0.0 cryptography==46.0.3 && \
-    python${PYTHON_VERSION} -m pip install --ignore-installed --upgrade Flask==3.1.2 Flask-JWT-Extended==4.7.1 flask-swagger-ui==4.11.1 requests==2.32.5 && \
+    python${PYTHON_VERSION} -m pip install setuptools==82.0.0 wheel==0.46.2 waitress==3.0.2 pipdeptree==2.29.0 cffi==2.0.0 cryptography==48.0.1 && \
+    python${PYTHON_VERSION} -m pip install --ignore-installed --upgrade Flask==3.1.2 Flask-JWT-Extended==4.7.1 flask-swagger-ui==4.11.1 requests==2.33.0 && \
     curl ${ALLURE_REPO}/${ALLURE_RELEASE}/allure-commandline-${ALLURE_RELEASE}.zip -L -o /tmp/allure-commandline.zip && \
         unzip -q /tmp/allure-commandline.zip -d / && \
         apt-get remove -y unzip && \
